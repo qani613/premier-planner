@@ -1,0 +1,36 @@
+---
+// EventsVideo.astro - Section showcasing event planning video
+import { initAnimations } from '../scripts/animations.js';
+---
+
+<section class="py-20 md:py-28 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Heading and Subheading -->
+    <div class="text-center mb-14 animate fade-in">
+      <h2 class="text-4xl md:text-5xl font-semibold text-premier-purple mb-5">We Plan Events You Can Celebrate</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto text-base md:text-lg">
+        Be it a birthday party or an anniversary, we will plan the perfect event for your special day
+      </p>
+    </div>
+
+    <!-- YouTube Video Embed -->
+    <div class="relative w-full max-w-4xl mx-auto aspect-video rounded-lg overflow-hidden shadow-xl animate scale-in delay-200">
+      <iframe
+        class="absolute top-0 left-0 w-full h-full"
+        src="https://www.youtube.com/embed/2-JB9hVvaUQ"
+        title="Premier Planners Event Video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Import and initialize animations
+  import { initAnimations } from '../scripts/animations.js';
+  
+  // Initialize animations when the component mounts
+  document.addEventListener('DOMContentLoaded', initAnimations);
+</script> 

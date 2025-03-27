@@ -1,0 +1,74 @@
+---
+// VideoCategoryFilter.astro - Filter buttons for video categories
+interface Props {
+  categories: string[];
+  activeCategory?: string;
+}
+
+// Format category name for display (capitalize, replace dashes with spaces)
+function formatCategoryName(category: string): string {
+  return category
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+const { categories, activeCategory = '' } = Astro.props;
+---
+
+<div class="flex flex-wrap justify-center gap-2 mb-8">
+  <button 
+    class={`px-4 py-2 rounded-full text-sm md:text-base transition-all duration-300 ${activeCategory === '' 
+      ? 'bg-premier-purple text-white' 
+      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+    data-category=""
+  >
+    All Videos
+  </button>
+  
+  {categories.map(category => (
+    <button 
+      class={`px-4 py-2 rounded-full text-sm md:text-base transition-all duration-300 ${activeCategory === category 
+        ? 'bg-premier-purple text-white' 
+        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+      data-category={category}
+    >
+      {formatCategoryName(category)}
+    </button>
+  ))}
+</div>
+
+<script>
+  // Add event listeners to category buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    const categoryButtons = document.querySelectorAll('[data-category]');
+    
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const category = button.getAttribute('data-category') || '';
+        
+        // Update active button styles
+        categoryButtons.forEach(btn => {
+          if (btn.getAttribute('data-category') === category) {
+            btn.classList.add('bg-premier-purple', 'text-white');
+            btn.classList.remove('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+          } else {
+            btn.classList.remove('bg-premier-purple', 'text-white');
+            btn.classList.add('bg-gray-100', 'text-gray-600', 'hover:bg-gray-200');
+          }
+        });
+        
+        // Filter videos by category
+        const videos = document.querySelectorAll('[data-video-category]');
+        videos.forEach(video => {
+          const videoCategory = video.getAttribute('data-video-category');
+          if (!category || videoCategory === category) {
+            (video as HTMLElement).style.display = 'block';
+          } else {
+            (video as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script> 

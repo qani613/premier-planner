@@ -1,0 +1,124 @@
+[
+  {
+    "id": "wedding-1",
+    "title": "Wedding Decoration",
+    "description": "Elegant floral arrangements for a spring wedding",
+    "imagePath": "/images/46999d8f-image-3.jpg",
+    "category": "weddings",
+    "featured": true,
+    "date": "2023-06-15"
+  },
+  {
+    "id": "birthday-1",
+    "title": "Birthday Celebration",
+    "description": "Colorful birthday setup for a teenager",
+    "imagePath": "/images/ae78c08d-image-4.jpg",
+    "category": "birthdays",
+    "featured": false,
+    "date": "2023-07-22"
+  },
+  {
+    "id": "party-1",
+    "title": "Party Balloons",
+    "description": "Creative balloon decorations for corporate events",
+    "imagePath": "/images/b803375a-image-2.jpg",
+    "category": "corporate",
+    "featured": false,
+    "date": "2023-08-10"
+  },
+  {
+    "id": "anniversary-1",
+    "title": "Anniversary Flowers",
+    "description": "Romantic floral arrangements for anniversaries",
+    "imagePath": "/images/dde5e177-image-5.jpg",
+    "category": "anniversaries",
+    "featured": true,
+    "date": "2023-09-18"
+  },
+  {
+    "id": "wedding-2",
+    "title": "Wedding Setup",
+    "description": "Complete wedding venue decoration",
+    "imagePath": "/images/weddings/DecorP3.jpg",
+    "category": "weddings",
+    "featured": false,
+    "date": "2023-10-05"
+  },
+  {
+    "id": "party-2",
+    "title": "Party Setup",
+    "description": "Festive party decorations for all occasions",
+    "imagePath": "/images/ae78c08d-image-4.jpg",
+    "category": "parties",
+    "featured": false,
+    "date": "2023-11-12"
+  },
+  {
+    "id": "decorations-1",
+    "title": "Event Decorations",
+    "description": "Artistic decorations for themed events",
+    "imagePath": "/images/weddings/DecorP3.jpg",
+    "category": "themed-events",
+    "featured": false,
+    "date": "2023-12-20"
+  },
+  {
+    "id": "decorations-2",
+    "title": "Event Decorations",
+    "description": "Artistic decorations for themed events",
+    "imagePath": "/images/weddings/DecorP20.jpg",
+    "category": "themed-events",
+    "featured": false,
+    "date": "2023-12-20"
+  },
+  {
+    "id": "decorations-2",
+    "title": "Event Decorations",
+    "description": "Artistic decorations for themed events",
+    "imagePath": "/images/weddings/DecorP20.jpg",
+    "category": "themed-events",
+    "featured": false,
+    "date": "2023-12-20"
+  },
+  {
+    "id": "decorations-2",
+    "title": "Event Decorations",
+    "description": "Artistic decorations for themed events",
+    "imagePath": "/images/weddings/DecorP26.jpg",
+    "category": "themed-events",
+    "featured": false,
+    "date": "2023-12-20"
+  },
+  {
+    "id": "decorations-2",
+    "title": "Event Decorations",
+    "description": "Artistic decorations for themed events",
+    "imagePath": "/images/weddings/DecorP27.jpg",
+    "category": "themed-events",
+    "featured": false,
+    "date": "2023-12-20"
+  },
+  {
+    "id": "decorations-2",
+    "title": "Event Decorations",
+    "description": "Artistic decorations for themed events",
+    "imagePath": "/images/weddings/imageevent7",
+    "category": "themed-events",
+    "featured": false,
+    "date": "2023-12-20"
+  },
+  {
+    "id": "decorations-2",
+    "title": "Event Decorations",
+    "description": "Artistic decorations for themed events",
+    "imagePath": "/images/weddings/imageevent.jpg",
+    "category": "themed-events",
+    "featured": false,
+    "date": "2023-12-20"
+  }
+]
+
+
+  
+
+

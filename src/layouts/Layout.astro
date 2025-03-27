@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import '../styles/animations.css';
+interface Props {
+	title?: string;
+}
+
+const { title = 'Premier Planner - Exceptional Event Planning Services' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="Premier Planner - Professional event planning services for corporate events, weddings, and special occasions. Let us create unforgettable experiences for you." />
+		<title>{title}</title>
+	</head>
+	<body class="antialiased text-gray-800">
+		<slot />
+	</body>
+</html>
+
+<script>
+	// Import the animation initialization function
+	import { initAnimations } from '../scripts/animations.js';
+  
+	// Initialize animations when the document is loaded
+	document.addEventListener('DOMContentLoaded', initAnimations);
+</script>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		min-height: 100%;
+	}
+
+	@media (min-width: 768px) {
+		html {
+			scroll-padding-top: 76px; /* For desktop - adjust for the fixed header */
+		}
+	}
+
+	@media (max-width: 767px) {
+		html {
+			scroll-padding-top: 60px; /* For mobile - smaller header */
+		}
+	}
+</style>

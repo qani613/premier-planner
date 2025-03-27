@@ -1,0 +1,71 @@
+---
+// ServicesOffered.astro - Services with icons section
+import { initAnimations } from '../scripts/animations.js';
+---
+
+<section class="py-20 bg-gray-50" id="services-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 animate slide-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-premier-purple mb-4">Celebrating Happiness</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        We are in the business of creating happiness for you to celebrate
+      </p>
+    </div>
+    
+    <!-- Changed to 2x2 grid on mobile, 3 columns on larger screens -->
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+      <!-- Service 1 - Decorations Planning -->
+      <div class="flex flex-col items-center text-center animate slide-up delay-100">
+        <div class="w-20 h-20 md:w-24 md:h-24 mb-4 md:mb-6">
+          <img 
+            src="/images/16d221e0-icon-1.png" 
+            alt="Party decoration icon" 
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-premier-purple">Decorations Planning</h3>
+        <p class="text-sm md:text-base text-gray-600">
+          We will help you choose the right decor for your party
+        </p>
+      </div>
+      
+      <!-- Service 2 - Venue Selection -->
+      <div class="flex flex-col items-center text-center animate slide-up delay-200">
+        <div class="w-20 h-20 md:w-24 md:h-24 mb-4 md:mb-6">
+          <img 
+            src="/images/c9e485a5-icon-2.png" 
+            alt="Circus tent icon" 
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-premier-purple">Venue Selection</h3>
+        <p class="text-sm md:text-base text-gray-600">
+          We will select the perfect location for your special day
+        </p>
+      </div>
+      
+      <!-- Service 3 - Party Favors & Food Catering -->
+      <div class="flex flex-col items-center text-center animate slide-up delay-300">
+        <div class="w-20 h-20 md:w-24 md:h-24 mb-4 md:mb-6">
+          <img 
+            src="/images/a9709327-icon-3.png" 
+            alt="Food and party favors icon" 
+            class="w-full h-full object-contain"
+          />
+        </div>
+        <h3 class="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-premier-purple">Party Favors & Food Catering</h3>
+        <p class="text-sm md:text-base text-gray-600">
+          We collaborate with only the best vendors for your event
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Import and initialize animations
+  import { initAnimations } from '../scripts/animations.js';
+  
+  // Initialize animations when the component mounts
+  document.addEventListener('DOMContentLoaded', initAnimations);
+</script> 

@@ -1,0 +1,123 @@
+---
+// SuccessStories.astro - Section showcasing success metrics with circular indicators
+import { initAnimations } from '../scripts/animations.js';
+---
+
+<section class="py-16 md:py-20 bg-white" id="success-stories-section">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Heading and Subheading -->
+    <div class="text-center mb-16 animate slide-up">
+      <h2 class="text-4xl md:text-5xl font-semibold text-premier-purple mb-5">Our Success Stories</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto text-base md:text-lg">
+        Our team of dedicated members will make sure your special event truly memorable
+      </p>
+    </div>
+
+    <!-- Stats with Circular Progress - Changed to 2x2 grid on mobile -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto">
+      <!-- Successful Events -->
+      <div class="flex flex-col items-center animate slide-up delay-100">
+        <div class="relative w-28 h-28 md:w-36 md:h-36 mb-3 md:mb-5">
+          <svg class="w-full h-full" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#f3f3f3"
+              stroke-width="3"
+            />
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#E75A7C"
+              stroke-width="3"
+              stroke-dasharray="95, 100"
+              class="circle-progress"
+            />
+            <text x="18" y="20.35" class="percentage-text" text-anchor="middle" fill="#E75A7C" font-size="10" font-weight="bold">95%</text>
+          </svg>
+        </div>
+        <p class="text-base md:text-lg font-medium text-premier-purple text-center">Successful Events</p>
+      </div>
+
+      <!-- Happy Clients -->
+      <div class="flex flex-col items-center animate slide-up delay-200">
+        <div class="relative w-28 h-28 md:w-36 md:h-36 mb-3 md:mb-5">
+          <svg class="w-full h-full" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#f3f3f3"
+              stroke-width="3"
+            />
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#7AE582"
+              stroke-width="3"
+              stroke-dasharray="98, 100"
+              class="circle-progress"
+            />
+            <text x="18" y="20.35" class="percentage-text" text-anchor="middle" fill="#7AE582" font-size="10" font-weight="bold">98%</text>
+          </svg>
+        </div>
+        <p class="text-base md:text-lg font-medium text-premier-purple text-center">Happy Clients</p>
+      </div>
+
+      <!-- Awards -->
+      <div class="flex flex-col items-center animate slide-up delay-300">
+        <div class="relative w-28 h-28 md:w-36 md:h-36 mb-3 md:mb-5">
+          <svg class="w-full h-full" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#f3f3f3"
+              stroke-width="3"
+            />
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#F8D57E"
+              stroke-width="3"
+              stroke-dasharray="25, 100"
+              class="circle-progress"
+            />
+            <text x="18" y="20.35" class="percentage-text" text-anchor="middle" fill="#F8D57E" font-size="10" font-weight="bold">25%</text>
+          </svg>
+        </div>
+        <p class="text-base md:text-lg font-medium text-premier-purple text-center">Awards</p>
+      </div>
+
+      <!-- Recommendations -->
+      <div class="flex flex-col items-center animate slide-up delay-400">
+        <div class="relative w-28 h-28 md:w-36 md:h-36 mb-3 md:mb-5">
+          <svg class="w-full h-full" viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#f3f3f3"
+              stroke-width="3"
+            />
+            <path
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              fill="none"
+              stroke="#8DE4AF"
+              stroke-width="3"
+              stroke-dasharray="65, 100"
+              class="circle-progress"
+            />
+            <text x="18" y="20.35" class="percentage-text" text-anchor="middle" fill="#8DE4AF" font-size="10" font-weight="bold">65%</text>
+          </svg>
+        </div>
+        <p class="text-base md:text-lg font-medium text-premier-purple text-center">Recommendations</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Import and initialize animations
+  import { initAnimations } from '../scripts/animations.js';
+  
+  // Initialize animations when the component mounts
+  document.addEventListener('DOMContentLoaded', initAnimations);
+</script> 

@@ -1,0 +1,44 @@
+---
+// GalleryImage.astro - Reusable component for gallery images
+import type { GalleryImage } from '../utils/galleryUtils';
+
+interface Props {
+  image: GalleryImage;
+  showDetails?: boolean;
+}
+
+const { image, showDetails = false } = Astro.props;
+
+// Format category name for display (capitalize, replace dashes with spaces)
+function formatCategoryName(category: string): string {
+  if (!category) return '';
+  return category
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+---
+
+<div class="group relative rounded-lg overflow-hidden shadow-md aspect-square" data-gallery-category={image.category || ''}>
+  <img 
+    src={image.imagePath} 
+    alt={image.title} 
+    class="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+  />
+  
+  <!-- Overlay with details -->
+  {showDetails && (
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+        <h3 class="font-medium text-lg">{image.title}</h3>
+        <p class="text-sm text-gray-200">{image.description}</p>
+        
+        {image.category && (
+          <span class="mt-2 inline-block text-xs bg-premier-purple bg-opacity-70 text-white px-2 py-0.5 rounded-full">
+            {formatCategoryName(image.category)}
+          </span>
+        )}
+      </div>
+    </div>
+  )}
+</div> 

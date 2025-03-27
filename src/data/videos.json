@@ -1,0 +1,20 @@
+[
+  {
+    "id": "fP-9VZKG1_U",
+    "title": "Wedding Planning",
+    "description": "Our premium wedding services",
+    "thumbnail": "https://img.youtube.com/vi/fP-9VZKG1_U/maxresdefault.jpg",
+    "featured": false,
+    "category": "weddings",
+    "uploadDate": "2023-09-22"
+  },
+  {
+    "id": "9_ALkGgIT6g",
+    "title": "Themed Events",
+    "description": "Unique and creative theme parties",
+    "thumbnail": "https://img.youtube.com/vi/9_ALkGgIT6g/maxresdefault.jpg",
+    "featured": true,
+    "category": "themed-events",
+    "uploadDate": "2023-11-05"
+  }
+] 

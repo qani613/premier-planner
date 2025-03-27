@@ -1,0 +1,160 @@
+/* animations.css - Reusable animation utilities for components */
+
+/* Base animation classes */
+.animate {
+  opacity: 0;
+  animation-duration: 0.8s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+  animation-play-state: paused;
+}
+
+.animate.visible {
+  animation-play-state: running;
+}
+
+/* Slide animations */
+.slide-up {
+  transform: translateY(30px);
+  animation-name: slideUp;
+}
+
+.slide-down {
+  transform: translateY(-30px);
+  animation-name: slideDown;
+}
+
+.slide-left {
+  transform: translateX(30px);
+  animation-name: slideLeft;
+}
+
+.slide-right {
+  transform: translateX(-30px);
+  animation-name: slideRight;
+}
+
+/* Fade animations */
+.fade-in {
+  animation-name: fadeIn;
+}
+
+.scale-in {
+  transform: scale(0.9);
+  animation-name: scaleIn;
+}
+
+/* Animation delay utilities */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Circular progress animations */
+.circle-progress {
+  stroke-linecap: round;
+  animation: progress 1.5s ease-out forwards;
+  animation-play-state: paused;
+}
+
+.visible .circle-progress {
+  animation-play-state: running;
+}
+
+.percentage-text {
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  animation: fadeIn 1s ease-out forwards;
+  opacity: 0;
+  animation-play-state: paused;
+}
+
+.visible .percentage-text {
+  animation-play-state: running;
+}
+
+/* Keyframes for animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes progress {
+  0% {
+    stroke-dasharray: 0, 100;
+  }
+} 

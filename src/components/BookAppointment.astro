@@ -1,0 +1,158 @@
+---
+// BookAppointment.astro - Booking section with Cal.com integration
+import { initAnimations } from '../scripts/animations.js';
+
+
+---
+
+<section class="py-20 bg-white" id="booking-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 animate slide-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-premier-purple mb-4">Appointments at Premier Planners LLC</h2>
+      <div class="max-w-4xl mx-auto text-gray-600">
+        <p>
+          At <span class="text-premier-purple font-medium">Premier Planners LLC</span>, we believe that every event deserves careful attention and expert planning. Our <span class="text-premier-purple font-medium">appointment-based consultations</span> ensure that we dedicate the time and focus needed to bring your vision to life. Whether you're planning an intimate gathering or a grand celebration, our team is ready to assist you every step of the way.
+        </p>
+      </div>
+    </div>
+    
+    <!-- Cal.com Integration -->
+    <div class="mt-10 animate fade-in delay-200 max-w-6xl mx-auto">
+      <div class="bg-gradient-to-r from-pink-50 to-purple-50 p-4 md:p-6 rounded-lg shadow-lg">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <!-- Cal element will be inserted here -->
+          <div id="cal-booking-container" class="w-full min-h-[500px] md:h-[700px]">
+            <!-- Cal inline embed code begins -->
+            <div style="width:100%;height:100%;min-height:500px;" id="my-cal-inline"></div>
+            <script type="text/javascript">
+              (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+              Cal("init", "full-event-consultation", {origin:"https://cal.com"});
+
+              Cal.ns["full-event-consultation"]("inline", {
+                elementOrSelector:"#my-cal-inline",
+                config: {
+                  "layout": window.innerWidth < 768 ? "week_view" : "month_view",
+                  "theme": "light",
+                  "hideEventTypeDetails": false,
+                  "primaryColor": "#6b21a8", // Premier purple color
+                  "responsive": true
+                },
+                calLink: "premierplanners/full-event-consultation",
+              });
+
+              Cal.ns["full-event-consultation"]("ui", {
+                "hideEventTypeDetails": false,
+                "layout": window.innerWidth < 768 ? "week_view" : "month_view"
+              });
+              
+              // Handle resize to adapt layout for different screen sizes
+              window.addEventListener('resize', function() {
+                if (Cal.ns && Cal.ns["full-event-consultation"]) {
+                  Cal.ns["full-event-consultation"]("ui", {
+                    "layout": window.innerWidth < 768 ? "week_view" : "month_view"
+                  });
+                }
+              });
+            </script>
+            <!-- Cal inline embed code ends -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Additional booking information -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 animate slide-up delay-300">
+      <!-- Service 1 -->
+      <div class="bg-pink-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center">
+        <div class="text-premier-purple mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-premier-purple">General Event Planning</h3>
+        <p class="text-gray-600">
+          Book a 30-minute session to discuss event type, budget, theme, and expectations.
+        </p>
+      </div>
+      
+      <!-- Service 2 -->
+      <div class="bg-pink-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center">
+        <div class="text-premier-purple mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-premier-purple">Theme & Design</h3>
+        <p class="text-gray-600">
+          Explore creative décor, color palettes, and distinctive design elements for your event.
+        </p>
+      </div>
+      
+      <!-- Service 3 -->
+      <div class="bg-pink-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-center">
+        <div class="text-premier-purple mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-premier-purple">Vendor & Venue Selection</h3>
+        <p class="text-gray-600">
+          Recommendations for caterers, florists, DJs, and venues based on your event requirements.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Import and initialize animations
+  import { initAnimations } from '../scripts/animations.js';
+  
+  // Initialize animations when the component mounts
+  document.addEventListener('DOMContentLoaded', () => {
+    initAnimations();
+    
+    // Adjust calendar height for mobile devices
+    function adjustCalHeight() {
+      const calContainer = document.getElementById('my-cal-inline');
+      if (calContainer) {
+        // Set minimum height for mobile
+        if (window.innerWidth < 768) {
+          calContainer.style.minHeight = '600px';
+        } else {
+          calContainer.style.height = '100%';
+        }
+      }
+    }
+    
+    // Call once on load and add resize listener
+    adjustCalHeight();
+    window.addEventListener('resize', adjustCalHeight);
+  });
+</script>
+
+<style>
+  /* Fix for mobile calendar display */
+  @media (max-width: 767px) {
+    :global(.cal-embed-iframe) {
+      width: 100% !important;
+      min-height: 600px !important;
+    }
+  }
+</style>
+
+<!-- 
+  ADD YOUR CAL.COM EMBED SCRIPT HERE
+  Example:
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed.js", "init");
+    Cal("init", {origin:"https://cal.com"});
+    
+    Cal("inline", {
+      elementOrSelector: "#cal-booking-placeholder",
+      calLink: "YOUR_USERNAME/YOUR_EVENT_LINK",
+      layout: "month_view",
+      theme: "light"
+    });
+  </script> 
+--> 

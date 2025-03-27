@@ -1,0 +1,109 @@
+---
+// CompanyJourney.astro - Company journey and blog section
+import { initAnimations } from '../scripts/animations.js';
+---
+
+<section class="py-20 bg-pink-50" id="company-journey-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 animate slide-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-premier-purple mb-4">Premier Planners Journey<br />of Creativity & Celebration</h2>
+      <div class="max-w-4xl mx-auto text-gray-600 space-y-4">
+        <p>
+          From a passion for event planning to becoming a trusted name in the industry, <span class="text-premier-purple font-medium">Premier Planners</span> has embarked on an incredible journey of creativity, innovation, and excellence. What started as a vision to transform ordinary gatherings into extraordinary celebrations has evolved into a full-service event planning company known for its meticulous attention to detail and personalized approach.
+        </p>
+        <p>
+          Join us as we share the milestones, challenges, and triumphs that have shaped <span class="text-premier-purple font-medium">Premier Planners</span>, and discover how we continue to bring dreams to life—one event at a time!
+        </p>
+      </div>
+    </div>
+    
+    <!-- Blog/Journey Articles Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+      <!-- Article 1 -->
+      <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 animate slide-up delay-100">
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <img 
+                src="/images/logo.png" 
+                alt="Author avatar" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="text-gray-400 text-sm flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              November 25, 2024
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-premier-purple">A Love Story, Perfectly Planned</h3>
+          <p class="text-gray-600 mb-4">
+            How we transformed a simple wedding into an unforgettable celebration of love and commitment.
+          </p>
+          <a href="#" class="inline-block text-premier-purple font-medium hover:underline">Read More</a>
+        </div>
+      </div>
+      
+      <!-- Article 2 -->
+      <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 animate slide-up delay-200">
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <img 
+                src="/images/logo.png" 
+                alt="Author avatar" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="text-gray-400 text-sm flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              November 25, 2024
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-premier-purple">Celebrate the Beginning of Forever</h3>
+          <p class="text-gray-600 mb-4">
+            Discover how we plan engagement parties that set the tone for a lifetime of happiness.
+          </p>
+          <a href="#" class="inline-block text-premier-purple font-medium hover:underline">Read More</a>
+        </div>
+      </div>
+      
+      <!-- Article 3 -->
+      <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 animate slide-up delay-300">
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full overflow-hidden mr-3">
+              <img 
+                src="/images/logo.png" 
+                alt="Author avatar" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="text-gray-400 text-sm flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              November 25, 2024
+            </div>
+          </div>
+          <h3 class="text-xl font-semibold mb-3 text-premier-purple">A Celebration to Remember</h3>
+          <p class="text-gray-600 mb-4">
+            How we created a milestone birthday party that left everyone talking for months.
+          </p>
+          <a href="#" class="inline-block text-premier-purple font-medium hover:underline">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Import and initialize animations
+  import { initAnimations } from '../scripts/animations.js';
+  
+  // Initialize animations when the component mounts
+  document.addEventListener('DOMContentLoaded', initAnimations);
+</script> 

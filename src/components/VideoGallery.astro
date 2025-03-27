@@ -1,0 +1,216 @@
+---
+// VideoGallery.astro - Video and Gallery display section with toggle
+import { initAnimations } from '../scripts/animations.js';
+import videosData from '../data/videos.json';
+import galleryData from '../data/gallery.json';
+import VideoCard from './VideoCard.astro';
+import GalleryImage from './GalleryImage.astro';
+import VideoCategoryFilter from './VideoCategoryFilter.astro';
+import GalleryCategoryFilter from './GalleryCategoryFilter.astro';
+import { getFeaturedVideo, sortByNewest as sortVideosByNewest } from '../utils/videoUtils';
+import { sortByNewest as sortImagesByNewest, getUniqueCategories } from '../utils/galleryUtils';
+import type { GalleryImage as GalleryImageType } from '../utils/galleryUtils';
+
+// Get videos from JSON file and sort by newest
+const videos = sortVideosByNewest(videosData);
+
+// Find the featured video using our utility function
+const featuredVideo = getFeaturedVideo(videos) || videos[0];
+
+// Extract unique video categories for the filter
+const videoCategories = [...new Set(
+  videos
+    .filter(v => v.category !== undefined)
+    .map(v => v.category as string)
+)] as string[];
+
+// Get gallery images from JSON and sort by newest
+const galleryImages = sortImagesByNewest(galleryData as GalleryImageType[]);
+
+// Extract unique gallery categories for the filter
+const galleryCategories = getUniqueCategories(galleryImages);
+---
+
+<section class="py-20 bg-white" id="video-gallery-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12 animate slide-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-premier-purple mb-4">View Our Video & Gallery</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        Check out the projects we've done, the decorations by our design team, and more, in our video & gallery
+      </p>
+    </div>
+    
+    <!-- Toggle Switch -->
+    <div class="flex justify-center mb-12 animate slide-up delay-100">
+      <div class="bg-gray-100 rounded-full p-1 inline-flex">
+        <button id="video-toggle" class="px-6 py-2 rounded-full bg-premier-purple text-white transition-all duration-300">
+          Videos
+        </button>
+        <button id="gallery-toggle" class="px-6 py-2 rounded-full text-gray-600 hover:bg-gray-200 hover:text-premier-purple transition-all duration-300">
+          Gallery
+        </button>
+      </div>
+    </div>
+    
+    <!-- Video Content -->
+    <div id="video-content" class="animate fade-in delay-200">
+      <!-- Category Filter (only displayed for videos) -->
+      <VideoCategoryFilter categories={videoCategories} />
+      
+      <div class="max-w-5xl mx-auto">
+        <!-- Main Featured Video -->
+        <div class="relative aspect-video rounded-lg overflow-hidden shadow-xl mb-10 group">
+          <div id="featured-video-container" class="w-full h-full">
+            <!-- YouTube placeholder before click -->
+            <div id="featured-video-placeholder" class="bg-beige-100 p-6 rounded-lg flex flex-col items-center justify-center h-full transition-all duration-500 group-hover:bg-beige-200">
+              <div class="w-full max-w-md mx-auto relative">
+                <img 
+                  src="/images/logo.png" 
+                  alt="Premier Planners Logo" 
+                  class="mx-auto mb-4 max-w-[200px] transition-all duration-500 group-hover:scale-105"
+                />
+                <div class="text-center">
+                  <h3 class="text-2xl text-premier-purple font-medium mb-1">{featuredVideo.title}</h3>
+                  <p class="text-xl text-amber-800 font-script">Premier Planners</p>
+                </div>
+                
+                <!-- Play button overlay - Uses the featured video ID -->
+                <div id="featured-play-button" data-video-id={featuredVideo.id} class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-premier-purple bg-opacity-80 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-all duration-300 cursor-pointer hover:bg-opacity-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <!-- YouTube iframe will be inserted here when clicked -->
+          </div>
+        </div>
+        
+        <!-- Video Gallery Grid - Changed to 2x2 grid on mobile -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          {videos.map((video) => (
+            <VideoCard video={video} compact={true} />
+          ))}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Gallery Content (Initially Hidden) -->
+    <div id="gallery-content" class="hidden animate fade-in delay-200">
+      <!-- Gallery Category Filter -->
+      <GalleryCategoryFilter categories={galleryCategories} />
+      
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {galleryImages.map((image) => (
+          <GalleryImage image={image} showDetails={true} />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Import and initialize animations
+  import { initAnimations } from '../scripts/animations.js';
+  
+  // Initialize animations when the component mounts
+  document.addEventListener('DOMContentLoaded', () => {
+    initAnimations();
+    
+    // Get elements with null checks
+    const videoToggle = document.getElementById('video-toggle');
+    const galleryToggle = document.getElementById('gallery-toggle');
+    const videoContent = document.getElementById('video-content');
+    const galleryContent = document.getElementById('gallery-content');
+    
+    if (videoToggle && galleryToggle && videoContent && galleryContent) {
+      videoToggle.addEventListener('click', () => {
+        // Update toggle button styles
+        videoToggle.classList.add('bg-premier-purple', 'text-white');
+        videoToggle.classList.remove('text-gray-600', 'hover:bg-gray-200', 'hover:text-premier-purple');
+        galleryToggle.classList.remove('bg-premier-purple', 'text-white');
+        galleryToggle.classList.add('text-gray-600', 'hover:bg-gray-200', 'hover:text-premier-purple');
+        
+        // Show video content, hide gallery content
+        videoContent.classList.remove('hidden');
+        galleryContent.classList.add('hidden');
+      });
+      
+      galleryToggle.addEventListener('click', () => {
+        // Update toggle button styles
+        galleryToggle.classList.add('bg-premier-purple', 'text-white');
+        galleryToggle.classList.remove('text-gray-600', 'hover:bg-gray-200', 'hover:text-premier-purple');
+        videoToggle.classList.remove('bg-premier-purple', 'text-white');
+        videoToggle.classList.add('text-gray-600', 'hover:bg-gray-200', 'hover:text-premier-purple');
+        
+        // Show gallery content, hide video content
+        galleryContent.classList.remove('hidden');
+        videoContent.classList.add('hidden');
+      });
+    }
+    
+    // YouTube video embedding functionality
+    function loadYouTubeVideo(containerId: string, videoId: string): void {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      
+      // Clear container
+      container.innerHTML = '';
+      
+      // Create iframe
+      const iframe = document.createElement('iframe');
+      iframe.width = '100%';
+      iframe.height = '100%';
+      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      iframe.title = 'YouTube video player';
+      iframe.frameBorder = '0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'z-10');
+      
+      // Append iframe to container
+      container.appendChild(iframe);
+    }
+    
+    // Set up featured video play button
+    const featuredPlayButton = document.getElementById('featured-play-button');
+    if (featuredPlayButton) {
+      featuredPlayButton.addEventListener('click', () => {
+        const videoId = featuredPlayButton.getAttribute('data-video-id');
+        if (videoId) {
+          // Hide placeholder
+          const placeholder = document.getElementById('featured-video-placeholder');
+          if (placeholder) placeholder.style.display = 'none';
+          
+          // Load YouTube video
+          loadYouTubeVideo('featured-video-container', videoId);
+        }
+      });
+    }
+    
+    // Set up all video play buttons in the grid
+    const playButtons = document.querySelectorAll('.video-play-button');
+    playButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const videoId = button.getAttribute('data-video-id');
+        if (videoId) {
+          // Hide placeholder if visible
+          const placeholder = document.getElementById('featured-video-placeholder');
+          if (placeholder) placeholder.style.display = 'none';
+          
+          // Load this video in the featured video container
+          loadYouTubeVideo('featured-video-container', videoId);
+          
+          // Scroll to featured video container if needed
+          const featuredContainer = document.getElementById('featured-video-container');
+          if (featuredContainer) {
+            featuredContainer.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+          }
+        }
+      });
+    });
+  });
+</script> 

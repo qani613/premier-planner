@@ -1,0 +1,85 @@
+---
+// Features.astro
+import { initAnimations } from '../scripts/animations.js';
+---
+
+<section class="py-20 bg-white" id="features-section">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16 animate slide-up">
+      <h2 class="text-3xl md:text-4xl font-bold text-premier-purple mb-4">Projects We Have Done</h2>
+      <p class="text-gray-600 max-w-3xl mx-auto">
+        From birthday parties, to anniversaries, no matter what the occasion is, we'll make sure that your special day is unforgettable
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Project 1 - Weddings -->
+      <div class="animate slide-up delay-100">
+        <div class="relative overflow-hidden rounded-lg mb-4">
+          <img 
+            src="/images/46999d8f-image-3.jpg" 
+            alt="Wedding flowers" 
+            class="w-full h-64 object-cover"
+          />
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-premier-purple">Weddings</h3>
+        <p class="text-gray-600">
+          Let us help you have the fairy tale wedding you've always dreamed of
+        </p>
+      </div>
+      
+      <!-- Project 2 - Birthday Parties -->
+      <div class="animate slide-up delay-200">
+        <div class="relative overflow-hidden rounded-lg mb-4">
+          <img 
+            src="/images/ae78c08d-image-4.jpg" 
+            alt="Birthday celebration with cupcake" 
+            class="w-full h-64 object-cover"
+          />
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-premier-purple">Birthday Parties</h3>
+        <p class="text-gray-600">
+          Throw stellar, unforgettable birthday parties for your loved ones
+        </p>
+      </div>
+      
+      <!-- Project 3 - Themed Parties -->
+      <div class="animate slide-up delay-300">
+        <div class="relative overflow-hidden rounded-lg mb-4">
+          <img 
+            src="/images/b803375a-image-2.jpg" 
+            alt="Themed party with balloons" 
+            class="w-full h-64 object-cover"
+          />
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-premier-purple">Themed Parties</h3>
+        <p class="text-gray-600">
+          Planning a themed party? Our creative team can help you with unique ideas
+        </p>
+      </div>
+      
+      <!-- Project 4 - Anniversaries -->
+      <div class="animate slide-up delay-100 lg:col-start-2">
+        <div class="relative overflow-hidden rounded-lg mb-4">
+          <img 
+            src="/images/dde5e177-image-5.jpg" 
+            alt="Anniversary celebration with gift and flowers" 
+            class="w-full h-64 object-cover"
+          />
+        </div>
+        <h3 class="text-xl font-semibold mb-2 text-premier-purple">Anniversaries</h3>
+        <p class="text-gray-600">
+          Reminisce over the good times, we'll help you plan the perfect anniversary party
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Import and initialize animations
+  import { initAnimations } from '../scripts/animations.js';
+  
+  // Initialize animations when the component mounts
+  document.addEventListener('DOMContentLoaded', initAnimations);
+</script> 
