@@ -12,9 +12,10 @@ interface Video {
 
 /**
  * Get the featured video from the video collection
+ * Returns null if no video is marked as featured
  */
 export function getFeaturedVideo(videos: Video[]): Video | null {
-  return videos.find(video => video.featured) || videos[0] || null;
+  return videos.find(video => video.featured === true) || null;
 }
 
 /**

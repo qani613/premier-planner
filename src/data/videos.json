@@ -13,7 +13,7 @@
     "title": "Themed Events",
     "description": "Unique and creative theme parties",
     "thumbnail": "https://img.youtube.com/vi/9_ALkGgIT6g/maxresdefault.jpg",
-    "featured": true,
+    "featured": false,
     "category": "themed-events",
     "uploadDate": "2023-11-05"
   }

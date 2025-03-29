@@ -22,7 +22,7 @@
     "title": "Party Balloons",
     "description": "Creative balloon decorations for corporate events",
     "imagePath": "/images/b803375a-image-2.jpg",
-    "category": "corporate",
+    "category": "parties",
     "featured": false,
     "date": "2023-08-10"
   },
@@ -102,7 +102,7 @@
     "id": "decorations-2",
     "title": "Event Decorations",
     "description": "Artistic decorations for themed events",
-    "imagePath": "/images/weddings/imageevent7",
+    "imagePath": "/images/weddings/imageevent7.jpg",
     "category": "themed-events",
     "featured": false,
     "date": "2023-12-20"

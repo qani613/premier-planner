@@ -1,0 +1,36 @@
+{
+  "site": {
+    "name": "Premier Planners",
+    "description": "Professional Event Planning Services",
+    "logoUrl": "/images/logo.png"
+  },
+  "videos": {
+    "showcaseVideoId": "2-JB9hVvaUQ",
+    "showcaseVideoTitle": "Premier Planners Event Video",
+    "showcaseVideoDescription": "Explore our event planning expertise",
+    "showcaseOptions": {
+      "autoplay": true,
+      "controls": false,
+      "showInfo": false,
+      "rel": false,
+      "mute": false,
+      "loop": false,
+      "startAt": 0,
+      "modestBranding": true
+    }
+  },
+  "contact": {
+    "email": "info@premierplanners.com",
+    "phone": "+1 (555) 123-4567"
+  },
+  "social": {
+    "instagram": "https://instagram.com/premierplanners",
+    "facebook": "https://facebook.com/premierplanners",
+    "pinterest": "https://pinterest.com/premierplanners"
+  },
+  "features": {
+    "videoGalleryEnabled": true,
+    "testimonialsEnabled": false,
+    "blogEnabled": true
+  }
+} 

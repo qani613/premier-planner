@@ -1,9 +1,53 @@
 ---
-// EventsVideo.astro - Section showcasing event planning video
+// EventsVideo.astro - Showcase video section for event planning
 import { initAnimations } from '../scripts/animations.js';
+import siteConfig from '../data/config.json';
+
+// Extract video configuration from site config
+const { showcaseVideoId, showcaseVideoTitle, showcaseOptions } = siteConfig.videos;
+const options = { ...showcaseOptions };
+
+// Handle autoplay constraints - browsers require mute for autoplay
+const iframeMute = options.autoplay ? true : options.mute;
+const userWantsMute = options.mute; // Store original preference for UI controls
+
+// Build YouTube embed URL with parameters
+function buildYouTubeUrl(videoId: string, options: any) {
+  const baseUrl = `https://www.youtube.com/embed/${videoId}`;
+  
+  // Create params object with YouTube parameter names
+  const params = {
+    autoplay: options.autoplay ? '1' : '0',
+    controls: options.controls ? '1' : '0',
+    iv_load_policy: options.showInfo ? '1' : '3', // 3 = hide annotations
+    rel: options.rel ? '1' : '0',
+    mute: iframeMute ? '1' : '0',
+    loop: options.loop ? '1' : '0',
+    start: options.startAt,
+    modestbranding: options.modestBranding ? '1' : '0',
+    playsinline: '1', // Better mobile experience
+    enablejsapi: '1' // Enable JavaScript API for control
+  };
+  
+  // Convert to URL query string
+  const queryString = Object.entries(params)
+    .filter(([_, value]) => value !== undefined)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+  
+  // Special handling for loop parameter - requires playlist parameter
+  let url = `${baseUrl}?${queryString}`;
+  if (options.loop) {
+    url += `&playlist=${videoId}`;
+  }
+  
+  return url;
+}
+
+const youtubeUrl = buildYouTubeUrl(showcaseVideoId, options);
 ---
 
-<section class="py-20 md:py-28 bg-white">
+<section id="our-story" class="py-20 md:py-28 bg-white">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Heading and Subheading -->
     <div class="text-center mb-14 animate fade-in">
@@ -13,24 +57,78 @@ import { initAnimations } from '../scripts/animations.js';
       </p>
     </div>
 
-    <!-- YouTube Video Embed -->
+    <!-- YouTube Video Embed with config-driven options -->
     <div class="relative w-full max-w-4xl mx-auto aspect-video rounded-lg overflow-hidden shadow-xl animate scale-in delay-200">
       <iframe
+        id="showcase-video"
         class="absolute top-0 left-0 w-full h-full"
-        src="https://www.youtube.com/embed/2-JB9hVvaUQ"
-        title="Premier Planners Event Video"
+        src={youtubeUrl}
+        title={showcaseVideoTitle}
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
+        data-video-id={showcaseVideoId}
+        data-autoplay={options.autoplay ? "true" : "false"}
+        data-user-mute={userWantsMute ? "true" : "false"}
       ></iframe>
     </div>
   </div>
 </section>
 
+<script is:inline>
+  // Load YouTube IFrame API
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // Variable to store the YouTube player
+  var player;
+
+  // Initialize the YouTube player when the API is ready
+  function onYouTubeIframeAPIReady() {
+    const iframe = document.getElementById('showcase-video');
+    const videoId = iframe.getAttribute('data-video-id');
+    const userWantsMute = iframe.getAttribute('data-user-mute') === 'true';
+    const autoplay = iframe.getAttribute('data-autoplay') === 'true';
+
+    // Create a new player and replace the existing iframe
+    player = new YT.Player('showcase-video', {
+      events: {
+        'onReady': function(event) {
+          if (autoplay) {
+            // Start playing
+            event.target.playVideo();
+            
+            // Handle unmuting if user doesn't want it muted
+            if (!userWantsMute) {
+              setTimeout(function() {
+                event.target.unMute();
+                // Set to reasonable volume level if needed
+                if (event.target.getVolume() < 15) {
+                  event.target.setVolume(30);
+                }
+              }, 1000);
+            }
+          }
+        },
+        'onStateChange': function(event) {
+          // When video starts playing, ensure it respects mute preferences
+          if (event.data === YT.PlayerState.PLAYING && !userWantsMute) {
+            event.target.unMute();
+          }
+        }
+      }
+    });
+  }
+</script>
+
 <script>
-  // Import and initialize animations
+  // Import animations module
   import { initAnimations } from '../scripts/animations.js';
   
   // Initialize animations when the component mounts
-  document.addEventListener('DOMContentLoaded', initAnimations);
+  document.addEventListener('DOMContentLoaded', () => {
+    initAnimations();
+  });
 </script> 

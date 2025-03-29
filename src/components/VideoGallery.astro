@@ -15,7 +15,26 @@ import type { GalleryImage as GalleryImageType } from '../utils/galleryUtils';
 const videos = sortVideosByNewest(videosData);
 
 // Find the featured video using our utility function
-const featuredVideo = getFeaturedVideo(videos) || videos[0];
+const rawFeaturedVideo = getFeaturedVideo(videos);
+
+// Check if we have a featured video
+const hasFeaturedVideo = rawFeaturedVideo !== null;
+
+// Create a safe featured video object that won't cause TypeScript null errors
+const featuredVideo = hasFeaturedVideo ? rawFeaturedVideo : {
+  id: '',
+  title: '',
+  description: '',
+  thumbnail: '',
+  category: '',
+  uploadDate: ''
+};
+
+// Filter out the featured video from the grid display to avoid duplication
+// Only if we have a featured video
+const gridVideos = hasFeaturedVideo 
+  ? videos.filter(video => video.id !== featuredVideo.id)
+  : videos;
 
 // Extract unique video categories for the filter
 const videoCategories = [...new Set(
@@ -60,26 +79,82 @@ const galleryCategories = getUniqueCategories(galleryImages);
       <div class="max-w-5xl mx-auto">
         <!-- Main Featured Video -->
         <div class="relative aspect-video rounded-lg overflow-hidden shadow-xl mb-10 group">
+          <!-- Featured badge - only shown if there's a featured video -->
+          {hasFeaturedVideo && (
+            <div class="absolute top-4 right-4 z-10 bg-premier-purple text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+              Featured Video
+            </div>
+          )}
           <div id="featured-video-container" class="w-full h-full">
             <!-- YouTube placeholder before click -->
-            <div id="featured-video-placeholder" class="bg-beige-100 p-6 rounded-lg flex flex-col items-center justify-center h-full transition-all duration-500 group-hover:bg-beige-200">
-              <div class="w-full max-w-md mx-auto relative">
-                <img 
-                  src="/images/logo.png" 
-                  alt="Premier Planners Logo" 
-                  class="mx-auto mb-4 max-w-[200px] transition-all duration-500 group-hover:scale-105"
-                />
-                <div class="text-center">
-                  <h3 class="text-2xl text-premier-purple font-medium mb-1">{featuredVideo.title}</h3>
-                  <p class="text-xl text-amber-800 font-script">Premier Planners</p>
-                </div>
+            <div id="featured-video-placeholder" class="bg-gradient-to-br from-beige-100 to-amber-50 p-6 rounded-lg flex flex-col items-center justify-center h-full transition-all duration-500 group-hover:from-beige-200 group-hover:to-amber-100">
+              <div class="w-full max-w-4xl mx-auto relative overflow-hidden rounded-lg shadow-2xl">
+                {hasFeaturedVideo ? (
+                  <>
+                    <!-- Thumbnail with overlay gradient when we have a featured video -->
+                    <div class="relative">
+                      <img 
+                        src={featuredVideo.thumbnail}
+                        alt={`${featuredVideo.title} Thumbnail`}
+                        class="w-full h-auto transition-all duration-700 group-hover:scale-105 rounded-lg"
+                      />
+                      <!-- Gradient overlay -->
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                    </div>
+                    
+                    <!-- Video title and description at the bottom of the thumbnail -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-amber-600 text-white px-2 py-1 rounded-md text-xs uppercase tracking-wider">
+                          {featuredVideo.category 
+                            ? featuredVideo.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') 
+                            : 'Video'}
+                        </span>
+                        {featuredVideo.uploadDate && (
+                          <span class="text-sm opacity-80">
+                            {new Date(featuredVideo.uploadDate).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}
+                          </span>
+                        )}
+                      </div>
+                      <h3 class="text-3xl font-bold mb-2 drop-shadow-md">{featuredVideo.title}</h3>
+                      {featuredVideo.description && <p class="text-lg opacity-90 drop-shadow-md">{featuredVideo.description}</p>}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <!-- Default logo display when no featured video -->
+                    <div class="bg-beige-100 p-10 rounded-lg flex flex-col items-center justify-center">
+                      <img 
+                        src="/images/logo.png" 
+                        alt="Premier Planners Logo" 
+                        class="mx-auto mb-4 max-w-[250px] transition-all duration-500 group-hover:scale-105"
+                      />
+                      <div class="text-center mt-4">
+                        <h3 class="text-2xl text-premier-purple font-medium mb-1">Premier Planners</h3>
+                        <p class="text-xl text-amber-800 font-script">Professional Event Planning</p>
+                        <p class="text-gray-600 mt-2 max-w-lg mx-auto">Explore our video gallery to see our latest events and creative designs</p>
+                      </div>
+                    </div>
+                  </>
+                )}
                 
-                <!-- Play button overlay - Uses the featured video ID -->
-                <div id="featured-play-button" data-video-id={featuredVideo.id} class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-premier-purple bg-opacity-80 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 transition-all duration-300 cursor-pointer hover:bg-opacity-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
-                  </svg>
-                </div>
+                <!-- Play button overlay - only shown if there's a featured video -->
+                {hasFeaturedVideo && featuredVideo.id && (
+                  <>
+                    <div id="featured-play-button" data-video-id={featuredVideo.id} class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-premier-purple bg-opacity-80 rounded-full flex items-center justify-center opacity-90 group-hover:opacity-100 transition-all duration-300 cursor-pointer hover:bg-opacity-100 hover:scale-110 shadow-lg">
+                      <div class="bg-white bg-opacity-20 rounded-full w-20 h-20 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-white" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    </div>
+                    
+                    <!-- "Click to play" text -->
+                    <div class="absolute bottom-24 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      Click to play video
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <!-- YouTube iframe will be inserted here when clicked -->
@@ -88,7 +163,7 @@ const galleryCategories = getUniqueCategories(galleryImages);
         
         <!-- Video Gallery Grid - Changed to 2x2 grid on mobile -->
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {videos.map((video) => (
+          {gridVideos.map((video) => (
             <VideoCard video={video} compact={true} />
           ))}
         </div>
@@ -109,6 +184,68 @@ const galleryCategories = getUniqueCategories(galleryImages);
   </div>
 </section>
 
+<style>
+  /* Pulse animation for the play button */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(101, 31, 155, 0.7);
+    }
+    
+    70% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 10px rgba(101, 31, 155, 0);
+    }
+    
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(101, 31, 155, 0);
+    }
+  }
+
+  /* Apply the animation to the play button */
+  #featured-play-button {
+    animation: pulse 2s infinite;
+  }
+  
+  /* Pause animation on hover for cleaner interaction */
+  #featured-play-button:hover {
+    animation-play-state: paused;
+  }
+  
+  /* Smooth transition for the featured video container */
+  #featured-video-container {
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  /* Scale effect on hover */
+  .group:hover #featured-video-container {
+    transform: scale(1.01);
+  }
+  
+  /* Currently playing video card styles */
+  .currently-playing {
+    box-shadow: 0 0 0 3px #651F9B, 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    position: relative;
+    z-index: 5;
+  }
+  
+  .currently-playing:after {
+    content: 'Now Playing';
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    background-color: #651F9B;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    z-index: 10;
+  }
+</style>
+
 <script>
   // Import and initialize animations
   import { initAnimations } from '../scripts/animations.js';
@@ -122,6 +259,26 @@ const galleryCategories = getUniqueCategories(galleryImages);
     const galleryToggle = document.getElementById('gallery-toggle');
     const videoContent = document.getElementById('video-content');
     const galleryContent = document.getElementById('gallery-content');
+    
+    // Check for hash in URL to show the correct content
+    const handleHashNavigation = () => {
+      if (videoToggle && galleryToggle && videoContent && galleryContent) {
+        const hash = window.location.hash.toLowerCase();
+        
+        // Check for hash-based navigation
+        if (hash === '#gallery' || hash === '#images') {
+          galleryToggle.click();
+        } else if (hash === '#videos') {
+          videoToggle.click();
+        }
+      }
+    };
+    
+    // Run once on page load
+    handleHashNavigation();
+    
+    // Also listen for hash changes (for back/forward browser navigation)
+    window.addEventListener('hashchange', handleHashNavigation);
     
     if (videoToggle && galleryToggle && videoContent && galleryContent) {
       videoToggle.addEventListener('click', () => {
@@ -157,35 +314,66 @@ const galleryCategories = getUniqueCategories(galleryImages);
       // Clear container
       container.innerHTML = '';
       
-      // Create iframe
-      const iframe = document.createElement('iframe');
-      iframe.width = '100%';
-      iframe.height = '100%';
-      iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-      iframe.title = 'YouTube video player';
-      iframe.frameBorder = '0';
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      iframe.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'z-10');
+      // Add loading spinner
+      const loadingSpinner = document.createElement('div');
+      loadingSpinner.className = 'absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 z-10';
+      loadingSpinner.innerHTML = `
+        <div class="text-white">
+          <svg class="animate-spin h-12 w-12 text-premier-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p class="mt-3 font-medium">Loading video...</p>
+        </div>
+      `;
+      container.appendChild(loadingSpinner);
       
-      // Append iframe to container
-      container.appendChild(iframe);
+      // Create iframe after a short delay for better UX
+      setTimeout(() => {
+        // Create iframe
+        const iframe = document.createElement('iframe');
+        iframe.width = '100%';
+        iframe.height = '100%';
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        iframe.title = 'YouTube video player';
+        iframe.frameBorder = '0';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.classList.add('absolute', 'inset-0', 'w-full', 'h-full', 'z-20');
+        
+        // Add load event to remove spinner when iframe loads
+        iframe.addEventListener('load', () => {
+          loadingSpinner.remove();
+        });
+        
+        // Append iframe to container
+        container.appendChild(iframe);
+      }, 800); // Small delay for more polished experience
     }
     
     // Set up featured video play button
     const featuredPlayButton = document.getElementById('featured-play-button');
+    // Only set up the button if it exists and we have a featured video
     if (featuredPlayButton) {
+      console.log('Featured video button found, video ID:', featuredPlayButton.getAttribute('data-video-id'));
       featuredPlayButton.addEventListener('click', () => {
         const videoId = featuredPlayButton.getAttribute('data-video-id');
+        console.log('Featured video play button clicked, video ID:', videoId);
         if (videoId) {
           // Hide placeholder
           const placeholder = document.getElementById('featured-video-placeholder');
-          if (placeholder) placeholder.style.display = 'none';
+          if (placeholder) {
+            placeholder.style.display = 'none';
+            console.log('Placeholder hidden');
+          }
           
           // Load YouTube video
           loadYouTubeVideo('featured-video-container', videoId);
+          console.log('Loading featured video with ID:', videoId);
         }
       });
+    } else {
+      console.log('No featured video play button found - this is expected when no featured video is set');
     }
     
     // Set up all video play buttons in the grid
@@ -208,6 +396,24 @@ const galleryCategories = getUniqueCategories(galleryImages);
               behavior: 'smooth',
               block: 'center'
             });
+          }
+          
+          // Mark the currently playing video in the grid
+          // First, remove 'currently-playing' class from all video cards
+          const allVideoCards = document.querySelectorAll('.group');
+          allVideoCards.forEach(card => {
+            card.classList.remove('currently-playing');
+          });
+          
+          // Find the parent card element that contains this button and add the class
+          // Use parent node traversal which is more Type-safe in TypeScript
+          let currentElement: HTMLElement | null = button as HTMLElement;
+          while (currentElement && !currentElement.classList.contains('group')) {
+            currentElement = currentElement.parentElement;
+          }
+          
+          if (currentElement) {
+            currentElement.classList.add('currently-playing');
           }
         }
       });
